@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -25,12 +26,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserDTO dto){
+    public ResponseEntity<String> register(@RequestBody UserDTO dto, @RequestBody MultipartFile imageFile){
         Optional<UserDTO> optionalUserDTO = userService.findByEmail(dto.getEmail());
         if (!optionalUserDTO.isEmpty()){
             return ResponseEntity.status(400).body("User with details Already Exists");
         }
-        User user = userService.createUser(dto);
+        User user = userService.createUser(dto, imageFile);
         otpUtil.generateAndSendOTP(user);
         return ResponseEntity.status(200).body("User registered Successfully. OTP sent.");
     }

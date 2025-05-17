@@ -1,11 +1,14 @@
 package com.FuelBee.backend.util;
 
 import com.FuelBee.backend.model.Entity.User;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+@Component
 public class OTPUtil {
     public static String generateOTP(){
         Random random = new Random();
