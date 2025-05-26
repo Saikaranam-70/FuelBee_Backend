@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(collection = "users")
+@Document(collection = "User")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,22 +24,13 @@ public class User {
     private String email;
     private String phone;
     private String password;
-
-    private Role role;
-
     private Address address;
-
-    private String profileImageUrl;
-
     private boolean isActive =true;
     private boolean isVerified = false;
-
-    String otp;
+    private String otp;
     private Date otpExpiryTime;
-
     @CreatedDate
     private Date createdAt;
-
     @LastModifiedDate
     private Date updatedAt;
 
@@ -83,28 +74,12 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public Address getAddress() {
         return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public String getProfileImageUrl() {
-        return profileImageUrl;
-    }
-
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
     }
 
     public boolean isActive() {

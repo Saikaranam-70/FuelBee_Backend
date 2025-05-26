@@ -1,11 +1,15 @@
 package com.FuelBee.backend.repository;
 
 import com.FuelBee.backend.model.Entity.User;
-import com.FuelBee.backend.model.dto.UserDTO;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface UserRepository extends MongoRepository<User, String> {
-    Optional<UserDTO> findByEmail(String email);
+
+
+    User findByPhone(String phoneNumber);
 }
