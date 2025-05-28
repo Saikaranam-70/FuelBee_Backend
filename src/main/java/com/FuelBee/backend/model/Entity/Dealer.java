@@ -17,6 +17,8 @@ public class Dealer {
     private String companyName;
     private String gstNumber;
     private DealerStatus status = DealerStatus.PENDING;
+    private boolean isActive =true;
+    private boolean isVerified = false;
 
     private List<FuelStation> fuelStations;
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -76,6 +78,22 @@ public class Dealer {
 
     public void setStatus(DealerStatus status) {
         this.status = status;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 
     public List<FuelStation> getFuelStations() {
