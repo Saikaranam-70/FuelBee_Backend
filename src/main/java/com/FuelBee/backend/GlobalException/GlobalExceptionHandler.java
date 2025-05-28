@@ -34,4 +34,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(DealerAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> dealerAlreadyExistException(DealerNotFoundException ex){
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DealerNotFoundException.class)
+    public ResponseEntity<ErrorResponse> dealerNotFoundException(DealerNotFoundException ex){
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FuelStationAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> fuelStationAlreadyExistException(FuelStationAlreadyExistException ex){
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FuelStationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> fuelStationNotFoundException(FuelStationNotFoundException ex){
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+    }
 }
