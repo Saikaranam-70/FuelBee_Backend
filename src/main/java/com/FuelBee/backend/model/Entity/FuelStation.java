@@ -16,6 +16,7 @@ public class FuelStation {
     private String licenseNumber;
     private Address address;
     private String contactNumber;
+    private String imageUrl;
 
     private List<FuelInfo> fuels;
 
@@ -67,6 +68,15 @@ public class FuelStation {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public List<FuelInfo> getFuels() {
