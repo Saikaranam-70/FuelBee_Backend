@@ -11,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "User")
 @Data
@@ -24,7 +25,7 @@ public class User {
     private String email;
     private String phone;
     private String password;
-    private Address address;
+    private List<Address> address;
     private boolean isActive =true;
     private boolean isVerified = false;
     private String otp;
@@ -74,11 +75,11 @@ public class User {
         this.password = password;
     }
 
-    public Address getAddress() {
+    public List<Address> getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(List<Address> address) {
         this.address = address;
     }
 

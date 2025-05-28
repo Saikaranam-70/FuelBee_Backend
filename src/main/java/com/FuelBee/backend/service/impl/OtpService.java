@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class OtpService {
@@ -34,8 +35,12 @@ public class OtpService {
                     new PhoneNumber(twilioPhoneNumber),
                     "Your FuelBee Verification Code is: "+ otp
             ).create();
-            User user = userRepository.findByPhone(phoneNumber);
+            Optional<User> optionalUser = userRepository.findByPhone(phoneNumber);
+            User user = optionalUser.get();
             user.setOtp(otp);
+
+            long expiryTime = System.currentTimeMillis()+60000;
+            user.setOtpExpiryTime(new Date(expiryTime));
             System.out.println(otp);
             userRepository.save(user);
 
@@ -46,21 +51,31 @@ public class OtpService {
     }
 
     public boolean validatePhoneOtp(String phoneNumber, String otp){
-        User user = userRepository.findByPhone(phoneNumber);
+        Optional<User> optionalUser = userRepository.findByPhone(phoneNumber);
+        System.out.println("called");
+        User user = optionalUser.get();
+        System.out.println(otp);
+        System.out.println(user.getOtp());
         if(user.getOtp()==null || user.getOtpExpiryTime()==null){
+            System.out.println("Called this one");
             return false;
         }
 
         if(!user.getOtp().equals(otp)){
+            System.out.println("called it");
             return false;
+
         }
         if(user.getOtpExpiryTime().before(new Date())){
+            System.out.println("Called this");
             return false;
         }
 
         user.setVerified(true);
         user.setOtp(null);
         user.setOtpExpiryTime(null);
+        userRepository.save(user);
+        System.out.println("Called this for ");
         return true;
 
     }
