@@ -3,9 +3,9 @@ package com.FuelBee.backend.response;
 public class DealerResponse {
     private String message;
     private String id;
-    private String statusCode;
+    private int statusCode;
 
-    public DealerResponse(String message, String id, String statusCode) {
+    public DealerResponse(String message, String id, int statusCode) {
         this.message = message;
         this.id = id;
         this.statusCode = statusCode;
@@ -27,11 +27,11 @@ public class DealerResponse {
         this.id = id;
     }
 
-    public String getStatusCode() {
+    public int getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(String statusCode) {
+    public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
     }
 }

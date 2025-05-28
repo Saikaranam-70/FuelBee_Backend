@@ -26,6 +26,9 @@ public class UserServiceImpl implements UserService{
     private OtpService otpService;
     @Autowired
     private UserRepository userRepository;
+
+
+
     @Override
     public Optional<User> findByPhone(String phoneNumber) {
         return userRepository.findByPhone(phoneNumber);

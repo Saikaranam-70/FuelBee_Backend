@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "Dealer")
@@ -13,14 +14,16 @@ public class Dealer {
 
     private String name;
     private String email;
+    private  String password;
     private String phone;
     private String companyName;
     private String gstNumber;
     private DealerStatus status = DealerStatus.PENDING;
     private boolean isActive =true;
     private boolean isVerified = false;
-
     private List<FuelStation> fuelStations;
+    private String otp;
+    private Date otpExpiryTime;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 
@@ -96,9 +99,34 @@ public class Dealer {
         isVerified = verified;
     }
 
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+
+    public Date getOtpExpiryTime() {
+        return otpExpiryTime;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setOtpExpiryTime(Date otpExpiryTime) {
+        this.otpExpiryTime = otpExpiryTime;
+    }
+
     public List<FuelStation> getFuelStations() {
         return fuelStations;
     }
+
 
     public void setFuelStations(List<FuelStation> fuelStations) {
         this.fuelStations = fuelStations;
