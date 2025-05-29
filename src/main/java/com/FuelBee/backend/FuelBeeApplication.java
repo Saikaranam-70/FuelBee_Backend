@@ -27,5 +27,4 @@ public class FuelBeeApplication {
 
 		SpringApplication.run(FuelBeeApplication.class, args);
 	}
-
 }

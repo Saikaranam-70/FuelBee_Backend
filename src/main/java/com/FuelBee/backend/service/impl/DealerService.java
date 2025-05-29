@@ -17,4 +17,6 @@ public interface DealerService {
     Optional<Dealer> findDealerByID(String id);
 
     Dealer addDetails(DealerDTO dealerDTO);
+
+    Dealer getDealerByID(String id);
 }

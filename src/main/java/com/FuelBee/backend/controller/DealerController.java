@@ -70,4 +70,18 @@ public class DealerController {
             throw new RuntimeException(e);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Dealer> getDealerById(@PathVariable("id") String id){
+        try{
+            Optional<Dealer> optionalDealer = dealerService.findDealerByID(id);
+            if(optionalDealer.isEmpty()){
+                throw new DealerNotFoundException("Dealer Not Found");
+            }
+            Dealer dealer = dealerService.getDealerByID(id);
+            return new ResponseEntity<>(dealer, HttpStatus.OK);
+        } catch (DealerNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -40,6 +40,7 @@ public class DealerServiceImpl implements DealerService{
 
         Optional<Dealer> optionalDealer= dealerRepository.findByPhone(phone);
         Dealer dealer= optionalDealer.get();
+        dealer.setPhone(phone);
         dealer.setOtp(otp);
 
         return dealerRepository.save(dealer);
@@ -53,11 +54,30 @@ public class DealerServiceImpl implements DealerService{
     @Override
     public Dealer addDetails(DealerDTO dealerDTO) {
         Optional<Dealer> optionalDealer = dealerRepository.findById(dealerDTO.getId());
-        Dealer dealer = new Dealer();
+        Dealer dealer = optionalDealer.get();
         dealer.setName(dealerDTO.getName());
         dealer.setCompanyName(dealerDTO.getCompanyName());
         dealer.setGstNumber(dealerDTO.getGstNumber());
 
         return dealerRepository.save(dealer);
+    }
+
+    @Override
+    public Dealer getDealerByID(String id) {
+        Optional<Dealer> optionalDealer = dealerRepository.findById(id);
+        Dealer dealer = optionalDealer.get();
+
+        Dealer showDealer = new Dealer();
+        showDealer.setId(dealer.getId());
+        showDealer.setName(dealer.getName());
+        showDealer.setEmail(dealer.getEmail());
+        showDealer.setPhone(dealer.getPhone());
+        showDealer.setCompanyName(dealer.getCompanyName());
+        showDealer.setGstNumber(dealer.getGstNumber());
+        showDealer.setStatus(dealer.getStatus());
+        showDealer.setActive(dealer.isActive());
+        showDealer.setVerified(dealer.isVerified());
+        showDealer.setFuelStations(dealer.getFuelStations());
+        return showDealer;
     }
 }
