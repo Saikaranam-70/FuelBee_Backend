@@ -26,7 +26,10 @@ public class FuelStationController {
     public ResponseEntity<FuelStationResponse> addFuelStation(@ModelAttribute FuelStationDto fuelStationDto,@RequestParam("image") MultipartFile image){
         try{
             String dealerId = fuelStationDto.getDealerId();
-            FuelStation fuelStation = fuelStationDto.getFuelStation();
+            FuelStation fuelStation = new FuelStation();
+            fuelStation.setStationName(fuelStationDto.getStationName());
+            fuelStation.setLicenseNumber(fuelStationDto.getLicenseNumber());
+            fuelStation.setContactNumber(fuelStationDto.getContactNumber());
 
             Optional<Dealer> optionalDealer = fuelStationService.findDealerById(dealerId);
             Optional<FuelStation> optionalFuelStation = fuelStationService.findFuelStationByLicenseNumber(fuelStation.getLicenseNumber());
