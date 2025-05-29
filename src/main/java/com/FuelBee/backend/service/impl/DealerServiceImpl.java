@@ -80,4 +80,9 @@ public class DealerServiceImpl implements DealerService{
         showDealer.setFuelStations(dealer.getFuelStations());
         return showDealer;
     }
+
+    @Override
+    public void deleteDealerByID(String id) {
+        dealerRepository.deleteById(id);
+    }
 }

@@ -84,4 +84,18 @@ public class DealerController {
             throw new RuntimeException(e);
         }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<DealerResponse> deleteDealer(@PathVariable("id")String id){
+        try{
+            Optional<Dealer> optionalDealer = dealerService.findDealerByID(id);
+            if(!optionalDealer.isPresent()){
+                throw new DealerNotFoundException("Dealer Not Found");
+            }
+            dealerService.deleteDealerByID(id);
+            return new ResponseEntity<>(new DealerResponse("Dealer Deleted Successfully", null, HttpStatus.OK.value()), HttpStatus.OK);
+        } catch (DealerNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

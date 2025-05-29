@@ -19,4 +19,6 @@ public interface DealerService {
     Dealer addDetails(DealerDTO dealerDTO);
 
     Dealer getDealerByID(String id);
+
+    void deleteDealerByID(String id);
 }
