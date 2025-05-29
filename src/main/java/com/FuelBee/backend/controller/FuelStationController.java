@@ -2,8 +2,11 @@ package com.FuelBee.backend.controller;
 
 import com.FuelBee.backend.exception.DealerNotFoundException;
 import com.FuelBee.backend.exception.FuelStationAlreadyExistException;
+import com.FuelBee.backend.exception.FuelStationNotFoundException;
 import com.FuelBee.backend.model.Entity.Dealer;
+import com.FuelBee.backend.model.Entity.FuelInfo;
 import com.FuelBee.backend.model.Entity.FuelStation;
+import com.FuelBee.backend.model.dto.FuelInfoDto;
 import com.FuelBee.backend.model.dto.FuelStationDto;
 import com.FuelBee.backend.response.FuelStationResponse;
 import com.FuelBee.backend.service.impl.FuelStationService;
@@ -46,6 +49,23 @@ public class FuelStationController {
         } catch (DealerNotFoundException e) {
             throw new RuntimeException(e);
         } catch (FuelStationAlreadyExistException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @PutMapping("/fuelInfo")
+    public ResponseEntity<FuelStationResponse> addFuelInfo(@RequestBody FuelInfoDto fuelInfoDto){
+        try{
+            String stationId = fuelInfoDto.getFuelStationId();
+            FuelInfo fuelInfo = fuelInfoDto.getFuelInfo();
+
+            Optional<FuelStation> optionalFuelStation = fuelStationService.findFuelStationById(stationId);
+            if(optionalFuelStation.isEmpty()){
+                throw new FuelStationNotFoundException("Fuel Station Not Found");
+            }
+            FuelStation fuelStation = fuelStationService.addFuelInfo(fuelInfo, stationId);;
+        } catch (FuelStationNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

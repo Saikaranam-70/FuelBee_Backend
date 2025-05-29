@@ -1,6 +1,7 @@
 package com.FuelBee.backend.service.impl;
 
 import com.FuelBee.backend.model.Entity.Dealer;
+import com.FuelBee.backend.model.Entity.FuelInfo;
 import com.FuelBee.backend.model.Entity.FuelStation;
 import com.FuelBee.backend.repository.DealerRepository;
 import com.FuelBee.backend.repository.FuelStationRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,5 +64,16 @@ public class FuelStationServiceImpl implements FuelStationService{
         dealerRepository.save(dealer);
 
         return fuelStationRepository.save(fuelStation1);
+    }
+
+    @Override
+    public Optional<FuelStation> findFuelStationById(String stationId) {
+        return fuelStationRepository.findById(stationId);
+    }
+
+    @Override
+    public FuelStation addFuelInfo(FuelInfo fuelInfo, String stationId) {
+
+        return null;
     }
 }
