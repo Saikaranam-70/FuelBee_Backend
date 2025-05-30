@@ -1,8 +1,11 @@
 package com.FuelBee.backend.service.impl;
 
+import com.FuelBee.backend.exception.DuplicateFuelTypeException;
+import com.FuelBee.backend.exception.FuelNotFoundException;
 import com.FuelBee.backend.model.Entity.Dealer;
 import com.FuelBee.backend.model.Entity.FuelInfo;
 import com.FuelBee.backend.model.Entity.FuelStation;
+import com.FuelBee.backend.model.dto.FuelInfoDto;
 import com.FuelBee.backend.repository.DealerRepository;
 import com.FuelBee.backend.repository.FuelStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +75,52 @@ public class FuelStationServiceImpl implements FuelStationService{
     }
 
     @Override
-    public FuelStation addFuelInfo(FuelInfo fuelInfo, String stationId) {
+    public FuelStation addFuelInfo(FuelInfo fuelInfo, String stationId) throws DuplicateFuelTypeException {
+        Optional<FuelStation> optionalFuelStation = fuelStationRepository.findById(stationId);
+        FuelStation fuelStation = optionalFuelStation.get();
+        List<FuelInfo> fuelInfos = fuelStation.getFuels();
+        if(fuelInfos == null){
+            fuelInfos = new ArrayList<>();
+        }else{
+            boolean exists = fuelInfos.stream().anyMatch(f->f.getType().equals(fuelInfo.getType()));
+            if(exists){
+                throw new DuplicateFuelTypeException("Fuel Type Already Exists");
+            }
+        }
+        fuelInfos.add(fuelInfo);
+        fuelStation.setFuels(fuelInfos);
 
-        return null;
+        return fuelStationRepository.save(fuelStation);
+    }
+
+    @Override
+    public FuelStation updateFuels(FuelInfoDto fuelInfoDto) throws FuelNotFoundException {
+        Optional<FuelStation> optionalFuelStation = fuelStationRepository.findById(fuelInfoDto.getFuelStationId());
+
+        FuelInfo fuelInfo = fuelInfoDto.getFuelInfo();
+        FuelStation fuelStation = optionalFuelStation.get();
+        List<FuelInfo> fuelInfos = fuelStation.getFuels();
+
+        if (fuelInfos == null || fuelInfos.isEmpty()) {
+            throw new FuelNotFoundException("No fuel information found for station ID: " );
+        }
+        boolean updated = false;
+
+        for (int i = 0;i<fuelInfos.size();i++){
+            FuelInfo existing = fuelInfos.get(i);
+            if(existing.getType().equals(fuelInfo.getType())){
+                fuelInfos.set(i, fuelInfo);
+                updated = true;
+                break;
+            }
+        }
+
+        if(!updated){
+            throw new FuelNotFoundException("Fuel Type Not Found");
+        }
+
+        fuelStation.setFuels(fuelInfos);
+
+        return fuelStationRepository.save(fuelStation);
     }
 }

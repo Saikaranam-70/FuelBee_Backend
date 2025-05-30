@@ -53,4 +53,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> fuelStationNotFoundException(FuelStationNotFoundException ex){
         return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(DuplicateFuelTypeException.class)
+    public ResponseEntity<ErrorResponse> duplicateFuelTypeException(DuplicateFuelTypeException ex){
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FuelNotFoundException.class)
+    public ResponseEntity<ErrorResponse> fuelNotFoundException(FuelNotFoundException ex){
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+    }
 }
