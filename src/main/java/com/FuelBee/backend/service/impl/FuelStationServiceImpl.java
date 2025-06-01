@@ -123,4 +123,9 @@ public class FuelStationServiceImpl implements FuelStationService{
 
         return fuelStationRepository.save(fuelStation);
     }
+
+    @Override
+    public List<FuelStation> findAllFuelStations() {
+        return fuelStationRepository.findAll();
+    }
 }

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -79,5 +80,14 @@ public class FuelStationController {
         }
         FuelStation fuelStation = fuelStationService.updateFuels(fuelInfoDto);
         return new ResponseEntity<>(new FuelStationResponse("Fuel Updated Successfully", fuelStation.getId(), HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
+    @GetMapping("/fuelStation")
+    public ResponseEntity<List<FuelStation>> getAllFuelStations() throws FuelStationNotFoundException {
+        List<FuelStation> optionalFuelStations = fuelStationService.findAllFuelStations();
+        if(optionalFuelStations.isEmpty()){
+            throw new FuelStationNotFoundException("Fuel Stations Not Found");
+        }
+        return new ResponseEntity<>(optionalFuelStations, HttpStatus.OK);
     }
 }
