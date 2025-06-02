@@ -94,6 +94,6 @@ public class FuelStationController {
     @GetMapping("/get-fuel/{type}")
     public ResponseEntity<FuelStation> getFuelByType(@PathVariable("type") String Type){
         return null;
-
+    }
 
 }
